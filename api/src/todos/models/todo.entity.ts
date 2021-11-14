@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { DefaultEntity } from '../../entity';
+import { User } from '../../users/models/user.entity';
 
 @Entity('todos')
 export class Todo extends DefaultEntity {
@@ -11,4 +12,11 @@ export class Todo extends DefaultEntity {
 
   @Column()
   status: string;
+
+  @ManyToOne(() => User, (user) => user.todos)
+  @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
+  user: User;
+
+  @Column()
+  userId: number;
 }
