@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './models/user.entity';
 import { UsersService } from './users.service';
 
@@ -9,5 +10,10 @@ export class UsersController {
   @Get()
   findUsers(): Promise<User[]> {
     return this.usersService.findUsers();
+  }
+
+  @Post('/create')
+  create(@Body() createUserDto: CreateUserDto): Promise<boolean> {
+    return this.usersService.createUser(createUserDto);
   }
 }
