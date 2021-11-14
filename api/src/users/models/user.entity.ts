@@ -1,8 +1,9 @@
 import { Column, Entity, Unique } from 'typeorm';
+import { DefaultEntity } from '../../entity';
 
 @Entity('users')
 @Unique(['name'])
-export class User {
+export class User extends DefaultEntity {
   @Column()
   name: string;
 

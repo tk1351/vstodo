@@ -1,7 +1,8 @@
 import { Column, Entity } from 'typeorm';
+import { DefaultEntity } from '../../entity';
 
 @Entity('todos')
-export class Todo {
+export class Todo extends DefaultEntity {
   @Column()
   title: string;
 
