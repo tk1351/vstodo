@@ -5,6 +5,14 @@ import { User } from '../users/models/user.entity';
 
 @EntityRepository(Todo)
 export class TodosRepository extends Repository<Todo> {
+  async findTodos(user: User): Promise<Todo[]> {
+    const { id } = user;
+
+    const todos = await this.find({ userId: id });
+
+    return todos;
+  }
+
   async createTodo(createTodoDto: CreateTodoDto, user: User): Promise<boolean> {
     const { title, content } = createTodoDto;
 
