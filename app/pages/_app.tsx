@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/reset.css'
 import type { AppProps } from 'next/app'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import { RecoilRoot } from 'recoil'
