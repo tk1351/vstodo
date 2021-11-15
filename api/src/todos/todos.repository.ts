@@ -7,10 +7,13 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 
 @EntityRepository(Todo)
 export class TodosRepository extends Repository<Todo> {
-  async findTodos(user: User): Promise<Todo[]> {
+  async findTodos(user: User): Promise<[Todo[], number]> {
     const { id } = user;
 
-    const todos = await this.find({ userId: id });
+    const todos = await this.createQueryBuilder('todos')
+      .where('todos.userId = :userId', { userId: id })
+      .orderBy('todos.createdAt', 'DESC')
+      .getManyAndCount();
 
     return todos;
   }
