@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetCurrentUser } from '../auth/get-user.decorator';
 import { User } from '../users/models/user.entity';
@@ -14,6 +14,12 @@ export class TodosController {
   @UseGuards(AuthGuard('jwt'))
   todos(@GetCurrentUser() user: User): Promise<Todo[]> {
     return this.todosService.findTodos(user);
+  }
+
+  @Get('/:id')
+  @UseGuards(AuthGuard('jwt'))
+  todo(@Param('id') id: number, @GetCurrentUser() user: User): Promise<Todo> {
+    return this.todosService.findTodoById(id, user);
   }
 
   @Post('/create')
