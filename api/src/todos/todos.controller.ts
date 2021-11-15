@@ -11,6 +11,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetCurrentUser } from '../auth/get-user.decorator';
 import { User } from '../users/models/user.entity';
 import { CreateTodoDto } from './dto/create-todo.dto';
+import { UpdateTodoDto } from './dto/update-todo.dto';
 import { Todo } from './models/todo.entity';
 import { TodosService } from './todos.service';
 
@@ -46,5 +47,15 @@ export class TodosController {
     @GetCurrentUser() user: User,
   ): Promise<boolean> {
     return this.todosService.updateStatus(id, user);
+  }
+
+  @Patch('/todo/:id')
+  @UseGuards(AuthGuard('jwt'))
+  updateTodo(
+    @Param('id') id: number,
+    @Body() updateTodoDto: UpdateTodoDto,
+    @GetCurrentUser() user: User,
+  ): Promise<boolean> {
+    return this.todosService.updateTodo(id, updateTodoDto, user);
   }
 }
