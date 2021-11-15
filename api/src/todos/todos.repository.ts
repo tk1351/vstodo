@@ -3,6 +3,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { Todo } from './models/todo.entity';
 import { User } from '../users/models/user.entity';
+import { UpdateTodoDto } from './dto/update-todo.dto';
 
 @EntityRepository(Todo)
 export class TodosRepository extends Repository<Todo> {
@@ -54,6 +55,22 @@ export class TodosRepository extends Repository<Todo> {
     }
 
     await todo.save();
+    return true;
+  }
+
+  async updateTodo(
+    id: number,
+    updateTodoDto: UpdateTodoDto,
+    user: User,
+  ): Promise<boolean> {
+    const todo = await this.findTodoById(id, user);
+
+    const { title, content } = updateTodoDto;
+
+    todo.title = title;
+    todo.content = content;
+    await todo.save();
+
     return true;
   }
 }
