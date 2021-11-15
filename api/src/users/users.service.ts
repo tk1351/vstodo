@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
@@ -18,6 +22,15 @@ export class UsersService {
 
   async findUsers(): Promise<User[]> {
     return await this.usersRepository.user();
+  }
+
+  async findUserById(user: User): Promise<User> {
+    const { id } = user;
+
+    const found = await this.usersRepository.findOne({ id });
+    if (!found) throw new NotFoundException(`ID: ${id}のuserは存在しません`);
+
+    return found;
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<boolean> {

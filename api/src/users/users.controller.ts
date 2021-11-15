@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
+import { GetCurrentUser } from 'src/auth/get-user.decorator';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './models/user.entity';
@@ -27,5 +29,12 @@ export class UsersController {
     const token = await this.usersService.login(authCredentialsDto);
     response.cookie('token', token, { httpOnly: true });
     return response.json({ token });
+  }
+
+  @Post('/logout')
+  @UseGuards(AuthGuard('jwt'))
+  async logout(@Res() response: Response, @GetCurrentUser() user: User) {
+    await this.usersService.findUserById(user);
+    return response.clearCookie('token').json(true);
   }
 }
