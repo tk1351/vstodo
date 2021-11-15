@@ -7,6 +7,11 @@ export const login = async (data: LoginInputsType) => {
   return res.data
 }
 
+export const logout = async () => {
+  const res = await api.post<boolean>('/users/logout')
+  return res.data
+}
+
 export const fetchCurrentUser = async () => {
   const res = await api.get<CurrentUser>('/auth/me')
   return res.data
