@@ -22,7 +22,7 @@ export class TodosController {
 
   @Get('')
   @UseGuards(AuthGuard('jwt'))
-  todos(@GetCurrentUser() user: User): Promise<Todo[]> {
+  todos(@GetCurrentUser() user: User): Promise<[Todo[], number]> {
     return this.todosService.findTodos(user);
   }
 

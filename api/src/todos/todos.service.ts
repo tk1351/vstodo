@@ -12,7 +12,7 @@ export class TodosService {
     @InjectRepository(TodosRepository) private todosRepository: TodosRepository,
   ) {}
 
-  async findTodos(user: User): Promise<Todo[]> {
+  async findTodos(user: User): Promise<[Todo[], number]> {
     return await this.todosRepository.findTodos(user);
   }
 
