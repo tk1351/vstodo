@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { Todo } from './models/todo.entity';
 import { User } from '../users/models/user.entity';
@@ -35,6 +35,25 @@ export class TodosRepository extends Repository<Todo> {
 
     await todo.save();
 
+    return true;
+  }
+
+  async updateStatus(id: number, user: User): Promise<boolean> {
+    const todo = await this.findTodoById(id, user);
+
+    const { status } = todo;
+    if (status === 'done')
+      throw new BadRequestException('既にstatusがdoneです');
+
+    if (status === 'todo') {
+      todo.status = 'doing';
+    }
+
+    if (status === 'doing') {
+      todo.status = 'done';
+    }
+
+    await todo.save();
     return true;
   }
 }
