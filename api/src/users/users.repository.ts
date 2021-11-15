@@ -2,6 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './models/user.entity';
+import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {
@@ -23,6 +24,23 @@ export class UsersRepository extends Repository<User> {
 
     await user.save();
     return true;
+  }
+
+  async validateUserPassword(
+    authCredentialsDto: AuthCredentialsDto,
+  ): Promise<number> {
+    const { name, password } = authCredentialsDto;
+
+    const user = await this.findOne(
+      { name },
+      { select: ['id', 'password', 'salt', 'name'] },
+    );
+
+    if (user && (await user.validatePassword(password))) {
+      return user.id;
+    }
+
+    return null;
   }
 
   private hashPassword(password: string, salt: string): Promise<string> {
