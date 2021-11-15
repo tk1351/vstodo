@@ -73,4 +73,10 @@ export class TodosRepository extends Repository<Todo> {
 
     return true;
   }
+
+  async deleteTodo(id: number, user: User): Promise<boolean> {
+    await this.findTodoById(id, user);
+    await this.delete({ id });
+    return true;
+  }
 }

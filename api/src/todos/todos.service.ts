@@ -35,4 +35,8 @@ export class TodosService {
   ): Promise<boolean> {
     return await this.todosRepository.updateTodo(id, updateTodoDto, user);
   }
+
+  async deleteTodo(id: number, user: User): Promise<boolean> {
+    return await this.todosRepository.deleteTodo(id, user);
+  }
 }
