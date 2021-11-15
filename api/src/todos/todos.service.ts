@@ -22,4 +22,8 @@ export class TodosService {
   async createTodo(createTodoDto: CreateTodoDto, user: User): Promise<boolean> {
     return await this.todosRepository.createTodo(createTodoDto, user);
   }
+
+  async updateStatus(id: number, user: User): Promise<boolean> {
+    return await this.todosRepository.updateStatus(id, user);
+  }
 }

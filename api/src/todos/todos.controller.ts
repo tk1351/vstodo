@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetCurrentUser } from '../auth/get-user.decorator';
 import { User } from '../users/models/user.entity';
@@ -29,5 +37,14 @@ export class TodosController {
     @GetCurrentUser() user: User,
   ): Promise<boolean> {
     return this.todosService.createTodo(createTodoDto, user);
+  }
+
+  @Patch('/status/:id')
+  @UseGuards(AuthGuard('jwt'))
+  updateStatus(
+    @Param('id') id: number,
+    @GetCurrentUser() user: User,
+  ): Promise<boolean> {
+    return this.todosService.updateStatus(id, user);
   }
 }
