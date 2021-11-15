@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -57,5 +58,14 @@ export class TodosController {
     @GetCurrentUser() user: User,
   ): Promise<boolean> {
     return this.todosService.updateTodo(id, updateTodoDto, user);
+  }
+
+  @Delete('/:id')
+  @UseGuards(AuthGuard('jwt'))
+  delete(
+    @Param('id') id: number,
+    @GetCurrentUser() user: User,
+  ): Promise<boolean> {
+    return this.todosService.deleteTodo(id, user);
   }
 }
