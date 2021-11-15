@@ -1,5 +1,6 @@
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
 import React, { FC } from 'react'
+import Link from 'next/link'
 
 type NavbarProps = {}
 
@@ -8,10 +9,14 @@ const Navbar: FC<NavbarProps> = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
+          <Link href="/">
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              VSTodo
+            </Typography>
+          </Link>
+          <Button color="inherit">
+            <Link href="/login">Login</Link>
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
