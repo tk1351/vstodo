@@ -15,6 +15,10 @@ export class TodosService {
     return await this.todosRepository.findTodos(user);
   }
 
+  async findTodoById(id: number, user: User): Promise<Todo> {
+    return await this.todosRepository.findTodoById(id, user);
+  }
+
   async createTodo(createTodoDto: CreateTodoDto, user: User): Promise<boolean> {
     return await this.todosRepository.createTodo(createTodoDto, user);
   }
