@@ -6,3 +6,8 @@ export interface ITodoType extends DefaultType {
   status: 'todo' | 'doing' | 'done'
   userId: number
 }
+
+export type CreateTodoDto = {
+  title: string
+  content: string | null
+}

@@ -8,7 +8,10 @@ import {
 } from '@mui/material'
 import React, { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { useSWRConfig } from 'swr'
+import { addTodo } from '../../src/api/todo'
 import { AddItemInputsType } from '../../types/input'
+import { CreateTodoDto } from '../../types/todo'
 
 const defaultValues: AddItemInputsType = {
   title: '',
@@ -27,8 +30,24 @@ const AddItem = () => {
     defaultValues,
   })
 
+  const { mutate } = useSWRConfig()
+
   const onSubmit: SubmitHandler<AddItemInputsType> = async (data) => {
-    console.log('data', data)
+    const { title, content } = data
+
+    if (content === '') {
+      const dto: CreateTodoDto = {
+        title,
+        content: null,
+      }
+      await addTodo(dto)
+      mutate('/todos')
+    } else {
+      const dto: CreateTodoDto = data
+      await addTodo(dto)
+    }
+    mutate('/todos')
+    setOpen(false)
   }
   return (
     <>
