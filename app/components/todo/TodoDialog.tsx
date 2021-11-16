@@ -16,6 +16,7 @@ import { useRecoilState } from 'recoil'
 import { css } from '@emotion/react'
 import { dialogState } from '../../recoil/atoms/dialog'
 import { todoState } from '../../recoil/atoms/todo'
+import { TodoContext } from './TodoItem'
 import MenuButtons from './MenuButtons'
 
 type TodoDialogProps = {}
@@ -88,7 +89,9 @@ const TodoDialog: FC<TodoDialogProps> = () => {
         </Grid>
         <Grid>
           <DialogActions>
-            <MenuButtons />
+            <TodoContext.Provider value={todo}>
+              <MenuButtons />
+            </TodoContext.Provider>
           </DialogActions>
         </Grid>
       </Dialog>
