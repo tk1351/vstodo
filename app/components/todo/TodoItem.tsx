@@ -1,16 +1,12 @@
-import { Button, IconButton, Typography } from '@mui/material'
-import {
-  CheckCircleOutlineOutlined,
-  EditOutlined,
-  RemoveCircleOutline,
-} from '@mui/icons-material'
+import { Button } from '@mui/material'
 import React, { FC } from 'react'
 import { css } from '@emotion/react'
 import { ITodoType } from '../../types/todo'
-import TodoDialog from './TodoDialog'
 import { useSetRecoilState } from 'recoil'
 import { dialogState } from '../../recoil/atoms/dialog'
 import { todoState } from '../../recoil/atoms/todo'
+import MenuButtons from './MenuButtons'
+import TodoDialog from './TodoDialog'
 
 type TodoItemProps = {
   todo: ITodoType
@@ -41,15 +37,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo }) => {
         <TodoDialog />
       </div>
       <div>
-        <IconButton>
-          <CheckCircleOutlineOutlined css={{ color: '#388e3c' }} />
-        </IconButton>
-        <IconButton>
-          <EditOutlined css={{ color: '#5996fa' }} />
-        </IconButton>
-        <IconButton>
-          <RemoveCircleOutline css={{ color: '#d32f2f' }} />
-        </IconButton>
+        <MenuButtons />
       </div>
     </div>
   )
