@@ -1,4 +1,4 @@
-import { IconButton, Typography } from '@mui/material'
+import { Button, IconButton, Typography } from '@mui/material'
 import {
   CheckCircleOutlineOutlined,
   EditOutlined,
@@ -7,6 +7,10 @@ import {
 import React, { FC } from 'react'
 import { css } from '@emotion/react'
 import { ITodoType } from '../../types/todo'
+import TodoDialog from './TodoDialog'
+import { useSetRecoilState } from 'recoil'
+import { dialogState } from '../../recoil/atoms/dialog'
+import { todoState } from '../../recoil/atoms/todo'
 
 type TodoItemProps = {
   todo: ITodoType
@@ -20,12 +24,21 @@ const todoItemWrapper = css`
 const TodoItem: FC<TodoItemProps> = ({ todo }) => {
   console.log('todo')
   const { title } = todo
+
+  const setOpen = useSetRecoilState(dialogState)
+  const setTodo = useSetRecoilState(todoState)
+
+  const onOpenTodoDialogClicked = (todo: ITodoType) => {
+    setOpen(true)
+    setTodo(todo)
+  }
   return (
     <div css={todoItemWrapper}>
       <div>
-        <Typography variant="h6" component="h4">
+        <Button color="inherit" onClick={() => onOpenTodoDialogClicked(todo)}>
           {title}
-        </Typography>
+        </Button>
+        <TodoDialog />
       </div>
       <div>
         <IconButton>

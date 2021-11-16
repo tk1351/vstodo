@@ -2,7 +2,7 @@ import { DefaultType } from '.'
 
 export interface ITodoType extends DefaultType {
   title: string
-  content: string
+  content: string | null
   status: 'todo' | 'doing' | 'done'
   userId: number
 }
