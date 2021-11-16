@@ -1,6 +1,7 @@
 import {
   Chip,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -15,6 +16,7 @@ import { useRecoilState } from 'recoil'
 import { css } from '@emotion/react'
 import { dialogState } from '../../recoil/atoms/dialog'
 import { todoState } from '../../recoil/atoms/todo'
+import MenuButtons from './MenuButtons'
 
 type TodoDialogProps = {}
 
@@ -83,6 +85,11 @@ const TodoDialog: FC<TodoDialogProps> = () => {
               )}
             </div>
           </DialogContent>
+        </Grid>
+        <Grid>
+          <DialogActions>
+            <MenuButtons />
+          </DialogActions>
         </Grid>
       </Dialog>
     )
